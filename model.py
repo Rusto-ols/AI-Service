@@ -15,5 +15,4 @@ def calculate_risk(data: FarmRequest) -> float:
         score += 0.2
     if data.precipitation_mm < 100:
         score += 0.1
-    # round убирает артефакты float (0.1 + 0.3 = 0.4000000000000001)
     return round(min(score, 1.0), 2)
