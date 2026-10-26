@@ -43,7 +43,7 @@ def _row(row: aiosqlite.Row) -> dict:
 async def init_db() -> None:
     try:
         async with _connect() as db:
-            await db.execute("PRAGMA journal_mode=WAL")  # читатели и писатель не блокируют друг друга
+            await db.execute("PRAGMA journal_mode=WAL") 
             await db.executescript(SCHEMA)
             await db.commit()
     except aiosqlite.Error as exc:
