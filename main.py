@@ -76,7 +76,6 @@ def rid(request: Request) -> str:
     return request.state.request_id
 
 
-# ---------------------------------------------------------------- service
 @app.get("/health", tags=["service"], summary="Проверка работоспособности")
 async def health():
     return {"status": "ok"}
@@ -98,7 +97,6 @@ async def queue_status(request: Request):
             "inference_timeout_seconds": config.INFERENCE_TIMEOUT_SECONDS}
 
 
-# ---------------------------------------------------------------- scoring
 @app.post("/predict", response_model=PredictionResponse, tags=["scoring"],
           summary="Оценка риска одного хозяйства",
           description="Инференс с таймаутом, затем запись в SQLite. 200 — только после commit.",
@@ -133,7 +131,6 @@ async def predict_queued(item: FarmRequest, request: Request):
     return await request.app.state.batcher.submit(rid(request), item)
 
 
-# ---------------------------------------------------------------- history
 @app.get("/predictions", response_model=list[PredictionResponse], tags=["history"],
          summary="История прогнозов из SQLite", responses=errors(422, 503))
 async def get_predictions(
@@ -192,7 +189,6 @@ async def get_request_predictions(request_id: str):
     return rows
 
 
-# ---------------------------------------------------------------- LLM
 SYSTEM_PROMPT = (
     "Ты помощник кредитного аналитика банка в сфере агроскоринга. Отвечай по-русски, кратко "
     "и по делу.")
