@@ -1,0 +1,425 @@
+{
+  "model": "nomic-embed-text",
+  "results": [
+    {
+      "method": "nomic-embed-text",
+      "phrase": "точная",
+      "question": "Что такое RAG?",
+      "question_id": "Q01",
+      "hit": true,
+      "fragments": [
+        {
+          "id": 4,
+          "page": 4
+        },
+        {
+          "id": 27,
+          "page": 11
+        },
+        {
+          "id": 21,
+          "page": 9
+        }
+      ]
+    },
+    {
+      "method": "Бинарный мешок слов",
+      "phrase": "точная",
+      "question": "Что такое RAG?",
+      "question_id": "Q01",
+      "hit": false,
+      "fragments": [
+        {
+          "id": 25,
+          "page": 10
+        },
+        {
+          "id": 21,
+          "page": 9
+        },
+        {
+          "id": 14,
+          "page": 6
+        }
+      ]
+    },
+    {
+      "method": "nomic-embed-text",
+      "phrase": "перефразировка",
+      "question": "Как устроен подход с поисковым дополнением генерации?",
+      "question_id": "Q01",
+      "hit": false,
+      "fragments": [
+        {
+          "id": 7,
+          "page": 4
+        },
+        {
+          "id": 3,
+          "page": 3
+        },
+        {
+          "id": 17,
+          "page": 7
+        }
+      ]
+    },
+    {
+      "method": "Бинарный мешок слов",
+      "phrase": "перефразировка",
+      "question": "Как устроен подход с поисковым дополнением генерации?",
+      "question_id": "Q01",
+      "hit": false,
+      "fragments": [
+        {
+          "id": 25,
+          "page": 10
+        },
+        {
+          "id": 26,
+          "page": 10
+        },
+        {
+          "id": 9,
+          "page": 5
+        }
+      ]
+    },
+    {
+      "method": "nomic-embed-text",
+      "phrase": "точная",
+      "question": "Что показывает бинарный мешок слов?",
+      "question_id": "Q02",
+      "hit": false,
+      "fragments": [
+        {
+          "id": 6,
+          "page": 4
+        },
+        {
+          "id": 5,
+          "page": 4
+        },
+        {
+          "id": 7,
+          "page": 4
+        }
+      ]
+    },
+    {
+      "method": "Бинарный мешок слов",
+      "phrase": "точная",
+      "question": "Что показывает бинарный мешок слов?",
+      "question_id": "Q02",
+      "hit": false,
+      "fragments": [
+        {
+          "id": 21,
+          "page": 9
+        },
+        {
+          "id": 22,
+          "page": 9
+        },
+        {
+          "id": 6,
+          "page": 4
+        }
+      ]
+    },
+    {
+      "method": "nomic-embed-text",
+      "phrase": "перефразировка",
+      "question": "Как кодируется наличие термина в разреженном лексическом векторе?",
+      "question_id": "Q02",
+      "hit": false,
+      "fragments": [
+        {
+          "id": 7,
+          "page": 4
+        },
+        {
+          "id": 3,
+          "page": 3
+        },
+        {
+          "id": 6,
+          "page": 4
+        }
+      ]
+    },
+    {
+      "method": "Бинарный мешок слов",
+      "phrase": "перефразировка",
+      "question": "Как кодируется наличие термина в разреженном лексическом векторе?",
+      "question_id": "Q02",
+      "hit": false,
+      "fragments": [
+        {
+          "id": 5,
+          "page": 4
+        },
+        {
+          "id": 12,
+          "page": 6
+        },
+        {
+          "id": 17,
+          "page": 7
+        }
+      ]
+    },
+    {
+      "method": "nomic-embed-text",
+      "phrase": "точная",
+      "question": "Какой метод учитывает частоту термина и распространённость в коллекции?",
+      "question_id": "Q03",
+      "hit": true,
+      "fragments": [
+        {
+          "id": 7,
+          "page": 4
+        },
+        {
+          "id": 3,
+          "page": 3
+        },
+        {
+          "id": 5,
+          "page": 4
+        }
+      ]
+    },
+    {
+      "method": "Бинарный мешок слов",
+      "phrase": "точная",
+      "question": "Какой метод учитывает частоту термина и распространённость в коллекции?",
+      "question_id": "Q03",
+      "hit": true,
+      "fragments": [
+        {
+          "id": 5,
+          "page": 4
+        },
+        {
+          "id": 20,
+          "page": 8
+        },
+        {
+          "id": 3,
+          "page": 3
+        }
+      ]
+    },
+    {
+      "method": "nomic-embed-text",
+      "phrase": "перефразировка",
+      "question": "Как называются взвешенные частотные признаки слов?",
+      "question_id": "Q03",
+      "hit": true,
+      "fragments": [
+        {
+          "id": 7,
+          "page": 4
+        },
+        {
+          "id": 6,
+          "page": 4
+        },
+        {
+          "id": 5,
+          "page": 4
+        }
+      ]
+    },
+    {
+      "method": "Бинарный мешок слов",
+      "phrase": "перефразировка",
+      "question": "Как называются взвешенные частотные признаки слов?",
+      "question_id": "Q03",
+      "hit": false,
+      "fragments": [
+        {
+          "id": 8,
+          "page": 5
+        },
+        {
+          "id": 6,
+          "page": 4
+        },
+        {
+          "id": 7,
+          "page": 4
+        }
+      ]
+    },
+    {
+      "method": "nomic-embed-text",
+      "phrase": "точная",
+      "question": "Для чего служит поисковый индекс?",
+      "question_id": "Q04",
+      "hit": false,
+      "fragments": [
+        {
+          "id": 7,
+          "page": 4
+        },
+        {
+          "id": 5,
+          "page": 4
+        },
+        {
+          "id": 3,
+          "page": 3
+        }
+      ]
+    },
+    {
+      "method": "Бинарный мешок слов",
+      "phrase": "точная",
+      "question": "Для чего служит поисковый индекс?",
+      "question_id": "Q04",
+      "hit": false,
+      "fragments": [
+        {
+          "id": 20,
+          "page": 8
+        },
+        {
+          "id": 14,
+          "page": 6
+        },
+        {
+          "id": 2,
+          "page": 3
+        }
+      ]
+    },
+    {
+      "method": "nomic-embed-text",
+      "phrase": "перефразировка",
+      "question": "Где хранят представления частей документа и их происхождение?",
+      "question_id": "Q04",
+      "hit": false,
+      "fragments": [
+        {
+          "id": 7,
+          "page": 4
+        },
+        {
+          "id": 3,
+          "page": 3
+        },
+        {
+          "id": 17,
+          "page": 7
+        }
+      ]
+    },
+    {
+      "method": "Бинарный мешок слов",
+      "phrase": "перефразировка",
+      "question": "Где хранят представления частей документа и их происхождение?",
+      "question_id": "Q04",
+      "hit": false,
+      "fragments": [
+        {
+          "id": 5,
+          "page": 4
+        },
+        {
+          "id": 4,
+          "page": 4
+        },
+        {
+          "id": 7,
+          "page": 4
+        }
+      ]
+    },
+    {
+      "method": "nomic-embed-text",
+      "phrase": "точная",
+      "question": "Какие существуют стратегии разбиения на фрагменты?",
+      "question_id": "Q05",
+      "hit": true,
+      "fragments": [
+        {
+          "id": 12,
+          "page": 6
+        },
+        {
+          "id": 9,
+          "page": 5
+        },
+        {
+          "id": 3,
+          "page": 3
+        }
+      ]
+    },
+    {
+      "method": "Бинарный мешок слов",
+      "phrase": "точная",
+      "question": "Какие существуют стратегии разбиения на фрагменты?",
+      "question_id": "Q05",
+      "hit": true,
+      "fragments": [
+        {
+          "id": 9,
+          "page": 5
+        },
+        {
+          "id": 12,
+          "page": 6
+        },
+        {
+          "id": 26,
+          "page": 10
+        }
+      ]
+    },
+    {
+      "method": "nomic-embed-text",
+      "phrase": "перефразировка",
+      "question": "Как можно разделять документ по границам текста?",
+      "question_id": "Q05",
+      "hit": true,
+      "fragments": [
+        {
+          "id": 7,
+          "page": 4
+        },
+        {
+          "id": 9,
+          "page": 5
+        },
+        {
+          "id": 3,
+          "page": 3
+        }
+      ]
+    },
+    {
+      "method": "Бинарный мешок слов",
+      "phrase": "перефразировка",
+      "question": "Как можно разделять документ по границам текста?",
+      "question_id": "Q05",
+      "hit": true,
+      "fragments": [
+        {
+          "id": 12,
+          "page": 6
+        },
+        {
+          "id": 9,
+          "page": 5
+        },
+        {
+          "id": 26,
+          "page": 10
+        }
+      ]
+    }
+  ]
+}

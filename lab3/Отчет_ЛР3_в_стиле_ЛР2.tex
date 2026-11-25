@@ -1,0 +1,259 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{iftex}
+\ifPDFTeX
+    \usepackage[utf8]{inputenc}
+    \usepackage[T2A]{fontenc}
+    \usepackage[russian]{babel}
+\else
+    \usepackage{fontspec}
+    \setmainfont{Liberation Serif}
+    \setsansfont{Liberation Sans}
+    \setmonofont{DejaVu Sans Mono}[Scale=0.9]
+    \usepackage[russian,provide=*]{babel}
+\fi
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage{longtable}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta, fit}
+
+% Настройка полей
+\geometry{a4paper, left=2.5cm, right=1.5cm, top=2cm, bottom=2cm}
+
+% Настройка заголовков
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+
+\hypersetup{colorlinks=true, linkcolor=black, urlcolor=blue}
+\captionsetup{labelsep=endash}
+
+% Настройка кода (literate нужен, чтобы listings печатал кириллицу в pdfLaTeX)
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!40!black},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny,
+    breaklines=true,
+    frame=single,
+    captionpos=b,
+    showstringspaces=false,
+    tabsize=4,
+    extendedchars=true,
+    keepspaces=true,
+    columns=flexible,
+    breakatwhitespace=true
+}
+\ifPDFTeX
+    \lstset{literate={а}{{\cyra}}1 {б}{{\cyrb}}1 {в}{{\cyrv}}1 {г}{{\cyrg}}1 {д}{{\cyrd}}1 {е}{{\cyre}}1 {ё}{{\cyryo}}1 {ж}{{\cyrzh}}1 {з}{{\cyrz}}1 {и}{{\cyri}}1 {й}{{\cyrishrt}}1 {к}{{\cyrk}}1 {л}{{\cyrl}}1 {м}{{\cyrm}}1 {н}{{\cyrn}}1 {о}{{\cyro}}1 {п}{{\cyrp}}1 {р}{{\cyrr}}1 {с}{{\cyrs}}1 {т}{{\cyrt}}1 {у}{{\cyru}}1 {ф}{{\cyrf}}1 {х}{{\cyrh}}1 {ц}{{\cyrc}}1 {ч}{{\cyrch}}1 {ш}{{\cyrsh}}1 {щ}{{\cyrshch}}1 {ъ}{{\cyrhrdsn}}1 {ы}{{\cyrery}}1 {ь}{{\cyrsftsn}}1 {э}{{\cyrerev}}1 {ю}{{\cyryu}}1 {я}{{\cyrya}}1 {А}{{\CYRA}}1 {Б}{{\CYRB}}1 {В}{{\CYRV}}1 {Г}{{\CYRG}}1 {Д}{{\CYRD}}1 {Е}{{\CYRE}}1 {Ё}{{\CYRYO}}1 {Ж}{{\CYRZH}}1 {З}{{\CYRZ}}1 {И}{{\CYRI}}1 {Й}{{\CYRISHRT}}1 {К}{{\CYRK}}1 {Л}{{\CYRL}}1 {М}{{\CYRM}}1 {Н}{{\CYRN}}1 {О}{{\CYRO}}1 {П}{{\CYRP}}1 {Р}{{\CYRR}}1 {С}{{\CYRS}}1 {Т}{{\CYRT}}1 {У}{{\CYRU}}1 {Ф}{{\CYRF}}1 {Х}{{\CYRH}}1 {Ц}{{\CYRC}}1 {Ч}{{\CYRCH}}1 {Ш}{{\CYRSH}}1 {Щ}{{\CYRSHCH}}1 {Ъ}{{\CYRHRDSN}}1 {Ы}{{\CYRERY}}1 {Ь}{{\CYRSFTSN}}1 {Э}{{\CYREREV}}1 {Ю}{{\CYRYU}}1 {Я}{{\CYRYA}}1 {—}{{\textemdash}}1 {–}{{\textendash}}1 {°}{{\textdegree}}1 {→}{{$\rightarrow$}}1}
+\fi
+\renewcommand{\lstlistingname}{Листинг}
+\lstdefinelanguage{json}{basicstyle=\ttfamily\small, string=[s]{"}{"}, stringstyle=\color{red}, morecomment=[l]{//}}
+
+% Настройка колонтитулов
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Лабораторная работа №3: RAG-система}
+\fancyhead[R]{\thepage}
+
+% Скриншот: если файла нет, вместо него рамка-заглушка (документ всё равно собирается)
+\newcommand{\screenshot}[3][\textwidth]{%
+    \begin{figure}[H]
+        \centering
+        \IfFileExists{images/#2}{\includegraphics[width=#1]{images/#2}}%
+            {\fbox{\parbox[c][3cm][c]{0.9\textwidth}{\centering Место для скриншота: \texttt{images/\detokenize{#2}}}}}
+        \caption{#3}
+        \label{fig:#2}
+    \end{figure}}
+
+
+\begin{document}
+\sloppy
+\begin{titlepage}
+\begin{center}
+\textbf{МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ}
+\vspace{0.5cm}
+
+\textbf{Федерального государственного автономного образовательного учреждения высшего образования}
+\vspace{0.3cm}
+
+\textbf{«НАЦИОНАЛЬНЫЙ ИССЛЕДОВАТЕЛЬСКИЙ ТЕХНОЛОГИЧЕСКИЙ УНИВЕРСИТЕТ МИСИС»}
+\vspace{2cm}
+
+\textbf{Институт компьютерных наук}
+\vspace{0.3cm}
+
+\textbf{Кафедра Инженерной кибернетики}
+\vspace{1cm}
+
+\textbf{Отчёт по лабораторной работе №3}
+\vspace{0.3cm}
+
+\textbf{по дисциплине «Современные интеллектуальные сетевые сервисы»}
+\vspace{1.5cm}
+
+\LARGE{\textbf{Разработка и исследование RAG-системы для работы с PDF-документом}}
+\vspace{2cm}
+\end{center}
+\begin{flushright}
+\textbf{Выполнил:}\\
+Студент группы МПИ-25-1-2\\
+Г.В. Шевченко\\[0.5cm]
+\textbf{Проверил:}\\
+Преподаватель\\
+М.Е. Корнет\\[1.5cm]
+\textbf{Оценка:} \hrulefill
+\end{flushright}
+\vfill
+\begin{center}Москва, 2026\end{center}
+\end{titlepage}
+\setcounter{page}{1}
+\tableofcontents
+\newpage
+\section{Цель работы}
+Цель работы --- построить воспроизводимый прототип поиска ответов по PDF на основе Retrieval Augmented Generation (RAG), исследовать влияние полноты индекса, размера и перекрытия фрагментов, сравнить два способа поиска, проверить ссылки на первоисточник, поведение при недостатке данных и поддержку уточнений в диалоге.
+
+\section{Архитектура RAG-системы}
+Исходный документ --- 12-страничное методическое пособие «Практическая работа №3: RAG-система». Для экспериментов индексировались страницы PDF 3--12 (10 страниц с основным материалом). Данные с ответами распределены по разным страницам. Исходное разбиение: 1000 символов, перекрытие 200 символов; индекс содержит 29 фрагментов, $k=3$.
+
+\begin{figure}[H]\centering
+\begin{tikzpicture}[node distance=1.2cm, every node/.style={font=\small}, box/.style={draw,rounded corners,align=center,minimum height=0.85cm,minimum width=3.0cm}, >=Stealth]
+\node[box] (pdf) {PDF-документ\\PyMuPDF};
+\node[box, right=of pdf] (split) {Разбиение\\метаданные};
+\node[box, right=of split] (index) {TF--IDF + SVD\\или binary BoW};
+\node[box, below=1.3cm of index] (search) {Поиск top-3\\косинусное сходство};
+\node[box, left=of search] (context) {Контекст + ссылки\\страница и ID};
+\node[box, left=of context] (ans) {Ответ + проверка\\опционально Ollama};
+\draw[->] (pdf)--(split); \draw[->] (split)--(index);
+\draw[->] (index)--(search); \draw[->] (search)--(context); \draw[->] (context)--(ans);
+\node[above=0.12cm of search, xshift=-2.2cm] {Вопрос};
+\end{tikzpicture}
+\caption{Компонентная схема исследованного конвейера RAG}
+\end{figure}
+
+В зафиксированном \textbf{офлайн-прогоне} используется плотное представление на основе символьных TF--IDF-признаков и TruncatedSVD. Это \emph{не} нейросетевой \texttt{OllamaEmbeddings}. Вместо LLM применяется детерминированный извлекатель опорного фрагмента. Для запуска \textbf{настоящей LLM} предусмотрен отдельный вызов Ollama (модель \texttt{qwen2.5:3b}, температура 0); показанные ниже численные результаты не выдаются за генерацию LLM.
+
+\begin{table}[H]\centering\caption{Файлы проекта}\small
+\begin{tabular}{|L{5.0cm}|L{9.0cm}|}\hline
+Файл & Назначение \\ \hline
+\texttt{rag\_lab3.py} & Подготовка PDF, 7 экспериментов, индексы, подсчёт метрик и CSV \\ \hline
+\texttt{Лабораторная\_работа\_3\_RAG.ipynb} & Notebook с сохранёнными выходными результатами \\ \hline
+\texttt{run\_ollama\_demo.py} & Демонстрация одного реального ответа Ollama \\ \hline
+\texttt{run\_ollama\_experiments.py} & Реальные ответы двух промптов, цитаты, уточнения; JSON/CSV \\ \hline
+\texttt{test\_rag\_lab3.py} & Восемь автоматических тестов \\ \hline
+\texttt{results\_lab3/} & Результаты задания 1--7 и сводка экспериментов \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Исходный код и запуск}
+Проект полностью включён в сопровождающий архив. Запуск выполняется в каталоге с исходным PDF:
+\begin{lstlisting}[language={},caption={Установка и проверка проекта}]
+python -m pip install -r requirements_lab3.txt
+python rag_lab3.py
+python -m unittest -v test_rag_lab3.py
+\end{lstlisting}
+При установленном Ollama реальный ответ можно получить командами \texttt{ollama pull qwen2.5:3b} и \texttt{python run\_ollama\_demo.py}. Режимы экспериментов с LLM доступны в \texttt{run\_ollama\_experiments.py}. Подробности приведены в \texttt{README\_запуск.md}.
+
+\section{Реализация заданий}
+\subsection{Задание 1. Полный и сокращённый индекс}
+Сопоставлены индексы из первых пяти и всех 29 фрагментов при неизменных вопросах и $k=3$. Банк содержит 10 вопросов: три по начальному разделу и семь по следующим. В каждой записи CSV сохранены ID найденных фрагментов и текст подтверждения при наличии.
+\begin{table}[H]\centering\caption{Полнота поискового индекса}\begin{tabular}{|l|c|c|c|}\hline
+Индекс & Начало, из 3 & Далее, из 7 & Hit Rate@3 \\ \hline
+Первые 5 & 2 & 0 & 20\% \\ \hline
+Полный & 1 & 6 & 70\% \\ \hline
+\end{tabular}\end{table}
+Два примера ошибки неполного индекса: вопросы Q06 (метаданные PDF-фрагмента) и Q08 (формула Hit Rate@k). Соответствующие опорные страницы лежат за пределами сокращённого набора; изменение промпта не создаёт отсутствующих в индексе сведений. Различие успеха на начальных вопросах показывает, что размер индекса также меняет ранжирование.
+
+\subsection{Задание 2. Размер фрагментов}
+Полный корпус был разбит при \texttt{chunk\_size}=500, 1000, 2000 символов; во всех случаях перекрытие 10 символов, top-3. Для каждой конфигурации индекс сформирован заново, вопросы остались прежними.
+\begin{table}[H]\centering\caption{Влияние длины фрагментов}\begin{tabular}{|r|r|r|r|}\hline
+Размер, символы & Фрагментов & Успехов из 10 & Hit Rate@3 \\ \hline
+500 & 46 & 7 & 70\% \\ \hline
+1000 & 25 & 6 & 60\% \\ \hline
+2000 & 16 & 7 & 70\% \\ \hline
+\end{tabular}\end{table}
+Для этого набора вопросов результаты на 500 и 2000 символах совпали по агрегированной метрике, поэтому универсального победителя нет. Короткие фрагменты могут оборвать описание, длинные --- добавлять соседние темы. Результат на 10 вопросах не переносится автоматически на другие документы.
+
+\subsection{Задание 3. Перекрытие фрагментов}
+При \texttt{chunk\_size}=1000 и $k=3$ исследованы перекрытия 0, 100, 200 символов на пяти контрольных вопросах. Почти одинаковыми считались два извлечённых фрагмента с коэффициентом Жаккара множества символьных 5-грамм более 0,8.
+\begin{table}[H]\centering\caption{Влияние перекрытия}\begin{tabular}{|r|r|r|r|}\hline
+Перекрытие & Фрагментов & Успехов из 5 & Повторы в top-3 \\ \hline
+0 & 25 & 4 & 0 \\ \hline
+100 & 27 & 4 & 0 \\ \hline
+200 & 29 & 5 & 0 \\ \hline
+\end{tabular}\end{table}
+Перекрытие 200 сохранило опорную цитату для дополнительного вопроса, но увеличило индекс. Улучшение не обязано быть монотонным: повторение текста конкурирует за места в top-3. Разбиение выполнялось отдельно внутри каждой страницы PDF.
+
+\subsection{Задание 4. Плотный поиск и бинарный мешок слов}
+Для одного набора фрагментов проверены пять вопросов с терминами из текста и пять переформулировок. В бинарном BoW использовался словарь, построенный только по PDF; запрос с нулевым вектором возвращает пустой результат. Плотная альтернатива получена методом SVD, а не отдельной моделью эмбеддингов.
+\begin{table}[H]\centering\caption{Сравнение поисковых представлений}\begin{tabular}{|L{5.2cm}|c|c|c|}\hline
+Метод & Точные из 5 & Иные формулировки из 5 & Всего из 10 \\ \hline
+Бинарный мешок слов & 2 & 1 & 3 \\ \hline
+TF--IDF + SVD & 3 & 3 & 6 \\ \hline
+\end{tabular}\end{table}
+В наблюдаемом офлайн-опыте SVD-поиск оказался успешнее по выбранной проверке опорных цитат. Это сравнение \emph{не подтверждает} превосходство нейросетевых эмбеддингов Ollama: они не участвовали в зафиксированном прогоне.
+
+\subsection{Задание 5. Проверяемые ссылки на источники}
+Каждый фрагмент содержит \texttt{id}, \texttt{page}, \texttt{source} и \texttt{start\_index}; позиция отсчитывается внутри извлечённого текста соответствующей страницы. Ссылка имеет формат [Фрагмент N, стр. P]. Приведены пять проверочных вопросов.
+\begin{table}[H]\centering\caption{Проверка ссылок}\begin{tabular}{|c|c|c|c|}\hline
+Вопрос & Ссылка существует & Факт подтверждён & Страница верна \\ \hline
+Q01 & Нет & Нет & Нет \\ \hline
+Q02 & Нет & Нет & Нет \\ \hline
+Q03 & Да & Да & Да \\ \hline
+Q04 & Да & Да & Да \\ \hline
+Q05 & Да & Да & Да \\ \hline
+\end{tabular}\end{table}
+Итого 3 из 5 ответов снабжены проверенной ссылкой. Если top-3 не содержит точной опорной цитаты, извлекатель возвращает отказ, а не выдуманную ссылку. Формальная ссылка сама по себе не доказывает истинности утверждения: требуется проверять фрагмент и страницу.
+
+\subsection{Задание 6. Отсутствие ответа и строгость промпта}
+Сформированы пять вопросов, ответы на которые присутствуют в PDF, и пять тематически близких вопросов без ответа. Для обеих инструкций сохранены одинаковые найденные фрагменты. Исходный промпт: «Ответь на вопрос на основе найденных фрагментов. Используй ссылки, если возможно». Строгий промпт: «Отвечай исключительно по найденным фрагментам PDF. При недостатке информации явно откажись от ответа. Подтверждай факты ссылками».
+
+\begin{table}[H]\centering\caption{Офлайн-прокси проверки ответа (не прогон двух LLM-промптов)}\begin{tabular}{|L{3cm}|c|c|c|}\hline
+Промпт & Средний балл (5) & Отказы из 5 & Выдуманные ответы \\ \hline
+Исходный & 1,2 & 5 & 0 \\ \hline
+Строгий & 1,2 & 5 & 0 \\ \hline
+\end{tabular}\end{table}
+Оба результата одинаковы, поскольку использован \emph{один и тот же детерминированный извлекатель}, не реагирующий на изменение промпта. Следовательно, это не свидетельство о качестве двух инструкций для LLM; воспроизводимый сценарий их реального сравнения включён отдельно.
+
+\subsection{Задание 7. Уточняющие вопросы}
+Реализованы три последовательных диалога по темам RAG, бинарного мешка слов и памяти диалога. В каждом есть исходный вопрос и два уточнения, отдельный идентификатор сессии, хранение истории и очистка по команде. Переформулировка уточнений в самостоятельные запросы задана прозрачными правилами (вариант Б без LLM-переформулировщика).
+\begin{table}[H]\centering\caption{Выполнение уточняющих вопросов}\begin{tabular}{|c|L{7.5cm}|c|}\hline
+Сессия & Пример поискового запроса & Успехов из 2 \\ \hline
+1 & Как работает подход RAG с поиском по документу? & 2 \\ \hline
+2 & Учитывает ли бинарный мешок слов порядок слов? & 0 \\ \hline
+3 & Сколько обменов вопрос--ответ хранит память диалога? & 2 \\ \hline
+\end{tabular}\end{table}
+Всего найдены опорные сведения в 4 из 6 уточнений. Проверено: истории трёх сессий независимы, очистка первой не влияет на вторую. История помогает восстановить объект вопроса, но не считается источником фактов.
+
+\section{Тестирование}
+\begin{table}[H]\centering\caption{Автоматические тест-кейсы}\begin{tabular}{|r|L{10cm}|l|}\hline
+№ & Проверяемый сценарий & Итог \\ \hline
+1 & Извлечение страниц PDF & PASS \\ \hline
+2 & Создание более пяти фрагментов & PASS \\ \hline
+3 & Корректные метаданные фрагмента & PASS \\ \hline
+4 & Смещение при перекрытии 200 символов & PASS \\ \hline
+5 & Ограничение выдачи top-3 & PASS \\ \hline
+6 & Пустая выдача для вне-словарного запроса BoW & PASS \\ \hline
+7 & Проверяемая ссылка по опорному фрагменту & PASS \\ \hline
+8 & Генерация таблиц для семи заданий & PASS \\ \hline
+\end{tabular}\end{table}
+Локальный запуск \texttt{python -m unittest -q test\_rag\_lab3} завершился успешно: 8 тестов, ошибок нет. Запись результатов сохраняет метаданные и ответ (либо отсутствие подтверждения) для дополнительной ручной проверки.
+
+\section{Вывод}
+Реализован воспроизводимый офлайн-конвейер анализа PDF: загрузка, фрагментация, два вида представления, ранжирование top-3, ссылки, отказ при недостатке подтверждений и отдельные диалоговые сессии. Полный индекс повысил Hit Rate@3 с 20\% до 70\%, а перекрытие 200 символов дало 5 из 5 успешных поисков в эксперименте №3. На вопросах эксперимента №2 равный Hit Rate@3 показали фрагменты 500 и 2000 символов.
+
+Ограничения существенны: поиск TF--IDF+SVD не равен OllamaEmbeddings; автоматическая проверка по опорной цитате не заменяет содержательную оценку генерации; влияние двух промптов на LLM в офлайн-прогоне не измерялось. Для самостоятельного запуска настоящей LLM и сохранения её реальных ответов приложены отдельные исполняемые скрипты.
+\end{document}

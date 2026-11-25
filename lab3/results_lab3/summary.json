@@ -1,0 +1,92 @@
+{
+  "source_pdf": "Практическая_работа__3_Совр_Инт_Сет_Сер.pdf",
+  "page_count": 12,
+  "indexed_pages": 10,
+  "baseline_chunk_count": 29,
+  "baseline_size": 1000,
+  "baseline_overlap": 200,
+  "top_k": 3,
+  "seed": 42,
+  "embedding_method": "character TF-IDF + TruncatedSVD (офлайн-приближение, не OllamaEmbeddings)",
+  "generator": "grounded evidence extractor (НЕ LLM)",
+  "python": "3.11.9",
+  "sklearn": "1.8.0",
+  "pymupdf": "1.26.7",
+  "pandas": "2.2.3",
+  "task1": {
+    "Первые 5|далее": {
+      "sum": 0,
+      "count": 7
+    },
+    "Первые 5|начало": {
+      "sum": 2,
+      "count": 3
+    },
+    "Полный|далее": {
+      "sum": 6,
+      "count": 7
+    },
+    "Полный|начало": {
+      "sum": 1,
+      "count": 3
+    }
+  },
+  "task2": {
+    "500": {
+      "sum": 7,
+      "count": 10
+    },
+    "1000": {
+      "sum": 6,
+      "count": 10
+    },
+    "2000": {
+      "sum": 7,
+      "count": 10
+    }
+  },
+  "task3": {
+    "0": {
+      "hit": 4,
+      "has_near_duplicates": 0
+    },
+    "100": {
+      "hit": 4,
+      "has_near_duplicates": 0
+    },
+    "200": {
+      "hit": 5,
+      "has_near_duplicates": 0
+    }
+  },
+  "task4": {
+    "Бинарный мешок слов|перефразировка": {
+      "sum": 1,
+      "count": 5
+    },
+    "Бинарный мешок слов|точный": {
+      "sum": 2,
+      "count": 5
+    },
+    "Плотный SVD (офлайн)|перефразировка": {
+      "sum": 3,
+      "count": 5
+    },
+    "Плотный SVD (офлайн)|точный": {
+      "sum": 3,
+      "count": 5
+    }
+  },
+  "task5": {
+    "valid_citations": 3,
+    "supported": 3
+  },
+  "task6": {
+    "correct_refusals": 5,
+    "note": "оценки прокси, НЕ эксперимент двух LLM-промптов"
+  },
+  "task7": {
+    "follow_up_hits": 4,
+    "follow_ups": 6
+  }
+}
