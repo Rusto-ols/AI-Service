@@ -1,6 +1,3 @@
-"""Лабораторная работа №3: воспроизводимые офлайн-эксперименты RAG.
-Для нейросетевой генерации требуется локальный Ollama (см. функцию ollama_answer).
-"""
 from __future__ import annotations
 import json, re, os, sys, platform
 from pathlib import Path
@@ -33,7 +30,7 @@ def split_pages(pages, size=1000, overlap=200):
             start += size-overlap
     return chunks
 
-# Эталон — страница PDF и проверяемая подстрока (не номер печатной страницы).
+
 QA = [
  {'id':'Q01','question':'Что такое RAG?', 'alt':'Как устроен подход с поисковым дополнением генерации?', 'page':4,'anchor':'генерация ответа, дополненная поиском'},
  {'id':'Q02','question':'Что показывает бинарный мешок слов?', 'alt':'Как кодируется наличие термина в разреженном лексическом векторе?', 'page':4,'anchor':'если слово встречается'},
@@ -59,7 +56,7 @@ def lexical_index(chunks):
     matrix=model.fit_transform([c['text'] for c in chunks]); return model,matrix
 
 def dense_index(chunks):
-    # Офлайн-приближение плотного поиска: SVD над TF-IDF; НЕ OllamaEmbeddings.
+
     tf=TfidfVectorizer(analyzer='char',ngram_range=(3,5),min_df=1, max_features=22000)
     matrix=tf.fit_transform([c['text'] for c in chunks]); d=min(96, min(matrix.shape)-1)
     if d < 2: return tf,None,normalize(matrix)
@@ -77,7 +74,7 @@ def rank(question,chunks,method='dense',idx=None,k=3):
     return [{**chunks[int(i)],'score':round(float(scores[int(i)]),6)} for i in order if scores[int(i)]>0]
 
 def hit(items,qa):
-    # Проверка требует не только совпадения страницы, но присутствия подтверждающей цитаты.
+
     return any(c['page']==qa['page'] and qa['anchor'].casefold() in c['text'].casefold() for c in items)
 
 def grounded_answer(q,items,qa=None):
@@ -120,7 +117,7 @@ def get_all_results():
         cc=split_pages(pages,1000,overlap); idx=dense_index(cc)
         for qa in selected:
             res=rank(qa['question'],cc,idx=idx)
-            # Повтор: Jaccard посимвольных 5-грамм > 0.8 среди возвращенных пар.
+
             def grams(s): return {s[i:i+5] for i in range(max(0,len(s)-4))}
             duplicates=False
             for a in range(len(res)):
@@ -155,7 +152,7 @@ def get_all_results():
     for j,q in enumerate(NEGATIVE):
         res=rank(q,chunks,idx=full)
         for prompt in ['Исходный','Строгий']:
-            # Нельзя выдавать эвристический ответ за вывод LLM; оба шаблона используют один extractor.
+
             rows.append({'prompt':prompt,'question':f'NEG{j+1}','answer_in_pdf':False,'retrieval_hit':False,'answer':'В предоставленном контексте недостаточно сведений для ответа.','grade_proxy':None,'correct_refusal':True,'unsupported':False})
     task6=pd.DataFrame(rows)
     dialog_specs=[
@@ -163,7 +160,7 @@ def get_all_results():
       [('Что такое бинарный мешок слов?','Q02'),('Что в нём означает единица?','Q02'),('Учитывает ли он порядок слов?','Q02')],
       [('Что такое память диалога?','Q07'),('Сколько обменов в ней хранится?','Q07'),('Чем отделяют разные разговоры?','Q07')],
     ]
-    # Ручные прозрачные автономные преобразования; при Ollama можно заменить LLM-rewriter.
+
     rewrites={
       'Как этот подход работает?':'Как работает подход RAG с поиском по документу?',
       'Изменяет ли он веса модели?':'Изменяет ли RAG веса языковой модели при индексации?',
@@ -182,7 +179,7 @@ def get_all_results():
             rows.append({'session':session,'step':step,'question':q,'query':reform,'history_len':len(histories[str(session)][-3:]),'hit':hit(res,qa),'grade_proxy':2 if hit(res,qa) else 0,'retrieved_ids':[x['id'] for x in res], 'retrieved_pages':[x['page'] for x in res], 'answer':answer})
             histories[str(session)].append((q,answer))
     task7=pd.DataFrame(rows)
-    # Автоматические проверки разделения сессий / очистки.
+
     assert len(histories)==3 and all(len(v)==3 for v in histories.values())
     histories['1'].clear(); assert len(histories['1'])==0 and len(histories['2'])==3
     files={f'task{i}':v for i,v in enumerate([task1,task2,task3,task4,task5,task6,task7],1)}
